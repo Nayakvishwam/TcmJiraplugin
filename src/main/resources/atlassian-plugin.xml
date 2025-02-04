@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}" />
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <resource type="i18n" name="i18n" location="tcmapp" />
+  <web-resource key="tcmapp-resources" name="tcmapp Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="tcmapp.css" location="/static/css/tcmapp.css" />
+    <resource type="download" name="tcmapp.js" location="/js/tcmapp.js" />
+    <resource type="download" name="images/" location="/images" />
+    <context>tcmapp</context>
+  </web-resource>
+  <web-section name="TCM" i18n-name-key="tcmm.name" key="tcmm" location="tcm" weight="1000">
+    <description key="tcmm.description">The TCM Plugin</description>
+  </web-section>
+  <web-item name="TCM" i18n-name-key="tcm.name" key="tcm" section="system.top.navigation.bar"
+    weight="1000">
+    <description key="tcm.description">The TCM Plugin</description>
+    <label key="tcm.label" />
+    <link linkId="tcm" />
+  </web-item>
+  <web-item name="Cases" i18n-name-key="cases.name" key="cases" section="tcm/tcmm" weight="1001">
+    <description key="cases.description">The Cases Plugin</description>
+    <label key="cases.label" />
+    <link linkId="cases-link">/plugins/servlet/simplehtmlservlet</link>
+  </web-item>
+  <servlet name="Simple Html Servlet" i18n-name-key="simple-html-servlet.name"
+    key="simple-html-servlet" class="tcmapp.servlet.SimpleHtmlServlet">
+    <description key="simple-html-servlet.description">The Simple Html Servlet Plugin</description>
+    <url-pattern>/simplehtmlservlet</url-pattern>
+  </servlet>
+  <servlet name="StaticResourceServlet" key="static-resource-servlet"
+    class="tcmapp.servlet.StaticResourceServlet">
+    <url-pattern>/static/*</url-pattern>
+  </servlet>
+</atlassian-plugin>
