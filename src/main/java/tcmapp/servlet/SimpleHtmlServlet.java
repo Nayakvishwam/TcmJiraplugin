@@ -15,10 +15,7 @@ public class SimpleHtmlServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-
-        // Load HTML from resources
-        String html = loadHtmlTemplate("/templates/my-template.html");
-        // Send the HTML response
+        String html = loadHtmlTemplate("/templates/index.html");
         PrintWriter writer = resp.getWriter();
         writer.write(html);
         writer.close();
