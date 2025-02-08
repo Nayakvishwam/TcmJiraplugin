@@ -16,27 +16,25 @@
     <resource type="download" name="images/" location="/images" />
     <context>tcmapp</context>
   </web-resource>
-  <web-section name="TCM" i18n-name-key="tcmm.name" key="tcmm" location="tcm" weight="1000">
-    <description key="tcmm.description">The TCM Plugin</description>
-  </web-section>
-  <web-item name="TCM" i18n-name-key="tcm.name" key="tcm" section="system.top.navigation.bar"
-    weight="1000">
-    <description key="tcm.description">The TCM Plugin</description>
-    <label key="tcm.label" />
-    <link linkId="tcm" />
+  <web-item name="TCM Admin" i18n-name-key="tcm.admin.name" key="tcm-admin" section="admin_plugins_menu" weight="1000">
+    <description key="tcm.admin.description">TCM Plugin for Admin</description>
+    <label key="tcm.admin.label" />
+    <link>/plugins/servlet/Dashboard</link>
+    <conditions>
+      <condition class="com.atlassian.jira.plugin.webfragment.conditions.UserLoggedInCondition"/>
+    </conditions>
   </web-item>
+
   <web-item name="Cases" i18n-name-key="cases.name" key="cases" section="tcm/tcmm" weight="1001">
     <description key="cases.description">The Cases Plugin</description>
     <label key="cases.label" />
-    <link linkId="cases-link">/plugins/servlet/simplehtmlservlet</link>
+    <link linkId="cases-link">/plugins/servlet/Dashboard</link>
   </web-item>
-  <servlet name="Simple Html Servlet" i18n-name-key="simple-html-servlet.name"
-    key="simple-html-servlet" class="tcmapp.servlet.SimpleHtmlServlet">
-    <description key="simple-html-servlet.description">The Simple Html Servlet Plugin</description>
-    <url-pattern>/simplehtmlservlet</url-pattern>
+  <servlet name="Simple Html Servlet" i18n-name-key="simple-html-servlet.name" key="simple-html-servlet" class="tcmapp.servlet.Dashboard">
+    <description key="simple-html-servlet.description">Tcm dashboard</description>
+    <url-pattern>/Dashboard</url-pattern>
   </servlet>
-  <servlet name="StaticResourceServlet" key="static-resource-servlet"
-    class="tcmapp.servlet.StaticResourceServlet">
+  <servlet name="StaticResourceServlet" key="static-resource-servlet" class="tcmapp.servlet.StaticResourceServlet">
     <url-pattern>/static/*</url-pattern>
   </servlet>
 </atlassian-plugin>
