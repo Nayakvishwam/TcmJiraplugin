@@ -1,13 +1,16 @@
 package tcmapp.servlet;
 
+import com.atlassian.activeobjects.external.ActiveObjects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import javax.ws.rs.core.MediaType;
-import tcmapp.service.TestCaseService;
-import com.atlassian.sal.api.component.ComponentLocator;
-import tcmapp.database.TestCaseDAO;
+import static com.google.common.base.Preconditions.*;
+import com.atlassian.jira.component.ComponentAccessor;
+import com.atlassian.sal.api.transaction.TransactionCallback;
+
+import tcmapp.ao.*;
 
 public class Dashboard extends BaseServlet {
 
@@ -23,6 +26,16 @@ public class Dashboard extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
+            // Ensure ActiveObjects is available
+            activeObjects = ComponentAccessor.getOSGiComponentInstanceOfType(ActiveObjects.class);
+            if (activeObjects == null) {
+                System.out.println("Ok");
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                resp.getWriter()
+                        .write("{\"error\": \"ActiveObjects is not initialized yet. Please try again later.\"}");
+                return;
+            }
+
             String name = req.getParameter("name");
             String description = req.getParameter("description");
 
@@ -32,7 +45,18 @@ public class Dashboard extends BaseServlet {
                 return;
             }
 
-            testCaseDAO.createTestCase(name, description);
+            // Perform the transaction
+            activeObjects.executeInTransaction(new TransactionCallback<Todo>() {
+                @Override
+                public Todo doInTransaction() {
+                    final Todo todo = activeObjects.create(Todo.class);
+                    todo.setDescription(description);
+                    todo.setComplete(false);
+                    todo.save();
+                    return todo;
+                }
+            });
+
             resp.setContentType(MediaType.APPLICATION_JSON);
             resp.getWriter().write("{\"message\": \"Test case created successfully\"}");
         } catch (Exception e) {
@@ -41,4 +65,5 @@ public class Dashboard extends BaseServlet {
             resp.getWriter().write("{\"error\": \"An internal error occurred: " + e.getMessage() + "\"}");
         }
     }
+
 }

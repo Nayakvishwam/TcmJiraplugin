@@ -23,9 +23,12 @@
     <label key="tcm-admin.label" />
     <link>/plugins/servlet/Dashboard</link>
   </web-item>
-  <component-import key="activeObjects"
-    interface="com.atlassian.activeobjects.external.ActiveObjects" />
-  <ao key="TestCase" entity="tcmapp.entity.TestCaseEntity" />
+  <ao key="active-objects">
+    <description>Active Objects Configuration</description>
+    <entity-packages>
+      <package>tcmapp.ao.Todo</package>
+    </entity-packages>
+  </ao>
   <servlet name="Tcm Dashboard Html Servlet" i18n-name-key="tcmdashboard-html-servlet.name"
     key="tcmdashboard-html-servlet" class="tcmapp.servlet.Dashboard">
     <description key="tcmdashboard-html-servlet.description">Tcm dashboard</description>
