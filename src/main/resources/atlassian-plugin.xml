@@ -23,10 +23,6 @@
     <label key="tcm-admin.label" />
     <link>/plugins/servlet/Dashboard</link>
   </web-item>
-  <ao key="ao-module">
-    <description>The module configuring the Active Objects service used by this plugin</description>
-    <entity>tcmapp.servlet.Todo</entity>
-  </ao>
   <servlet name="Tcm Dashboard Html Servlet" i18n-name-key="tcmdashboard-html-servlet.name"
     key="tcmdashboard-html-servlet" class="tcmapp.servlet.Dashboard">
     <description key="tcmdashboard-html-servlet.description">Tcm dashboard</description>
